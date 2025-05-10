@@ -1,6 +1,8 @@
 
 import type { LucideIcon } from 'lucide-react';
-import { Leaf, Sparkles, Award, CalendarCheck, Star, Instagram, Facebook, Youtube, ClipboardCheck, ThumbsUp, ShieldCheck } from 'lucide-react';
+import { Leaf, Sparkles, Award, CalendarCheck, Star, Instagram, Facebook, ClipboardCheck, ThumbsUp, ShieldCheck } from 'lucide-react';
+import { TiktokIcon } from '@/components/icons/tiktok-icon';
+import type React from 'react';
 
 export type NavLink = {
   href: string;
@@ -77,14 +79,14 @@ export const TESTIMONIALS_DATA: Testimonial[] = [
 
 export type SocialLink = {
   href: string;
-  icon: LucideIcon;
+  icon: React.ElementType; // Use React.ElementType for broader compatibility with Lucide and custom icons
   label: string;
 };
 
 export const SOCIAL_LINKS: SocialLink[] = [
   { href: 'https://www.instagram.com/kynstudio_hn', icon: Instagram, label: 'Instagram' },
   { href: 'https://www.facebook.com/kynstudiohn', icon: Facebook, label: 'Facebook' },
-  { href: 'https://www.tiktok.com/@fernandabermudez03', icon: Youtube, label: 'TikTok' }, // Assuming Youtube icon for TikTok as TikTok not in lucide
+  { href: 'https://www.tiktok.com/@fernandabermudez03', icon: TiktokIcon, label: 'TikTok' },
 ];
 
 export type TeamMember = {
@@ -147,3 +149,4 @@ export const STRAND_TEST_BENEFITS: StrandTestBenefitItem[] = [
 // Replace with your actual WhatsApp number (country code + number, no '+' or leading zeros unless part of the number itself)
 // Example for Spain (+504): 89137344
 export const WHATSAPP_PHONE_NUMBER = '50489137344'; // TODO: Replace with actual WhatsApp business number
+
