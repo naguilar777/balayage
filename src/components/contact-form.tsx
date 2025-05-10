@@ -20,6 +20,13 @@ import { Checkbox } from "@/components/ui/checkbox";
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
 import { CalendarIcon } from "lucide-react";
 import { Calendar } from "@/components/ui/calendar";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 import { cn } from "@/lib/utils";
 import { format } from "date-fns";
 import { es } from 'date-fns/locale';
@@ -33,12 +40,34 @@ const formSchema = z.object({
   email: z.string().email({ message: "Por favor, introduce un email válido." }),
   phone: z.string().min(9, { message: "El teléfono debe tener al menos 9 dígitos." }).regex(/^\+?[0-9\s-()]*$/, { message: "Número de teléfono inválido."}),
   preferredDate: z.date({ required_error: "Por favor, selecciona una fecha." }),
-  preferredTime: z.string().trim().min(1, { message: "Por favor, indica una hora preferida." }),
+  preferredTime: z.string({ required_error: "Por favor, selecciona una hora." }).min(1, { message: "Por favor, selecciona una hora." }),
   comments: z.string().optional(),
   privacyPolicy: z.boolean().refine(val => val === true, {
     message: "Debes aceptar la política de privacidad.",
   }),
 });
+
+const generateTimeSlots = () => {
+  const slots = [];
+  const startTime = 9; // 9 AM
+  const endTime = 19; // 7 PM
+  const interval = 30; // minutes
+
+  for (let hour = startTime; hour <= endTime; hour++) {
+    for (let minute = 0; minute < 60; minute += interval) {
+      if (hour === endTime && minute > 0) break; // Do not exceed end time
+      
+      const formattedHour = hour.toString().padStart(2, '0');
+      const formattedMinute = minute.toString().padStart(2, '0');
+      slots.push(`${formattedHour}:${formattedMinute}`);
+    }
+  }
+  // Ensure the last slot is exactly endTime if interval doesn't align perfectly
+  // For 9:00 to 19:00 with 30 min interval, 19:00 is already included.
+  return slots;
+};
+
+const timeSlots = generateTimeSlots();
 
 export function ContactForm() {
   const { toast } = useToast();
@@ -197,11 +226,22 @@ export function ContactForm() {
           render={({ field }) => (
             <FormItem>
               <FormLabel>Hora preferida</FormLabel>
-              <FormControl>
-                <Input placeholder="Ej: Mañana, Tarde, 16:00h" {...field} />
-              </FormControl>
+              <Select onValueChange={field.onChange} defaultValue={field.value}>
+                <FormControl>
+                  <SelectTrigger className={cn(!field.value && "text-muted-foreground")}>
+                    <SelectValue placeholder="Selecciona una hora" />
+                  </SelectTrigger>
+                </FormControl>
+                <SelectContent>
+                  {timeSlots.map((time) => (
+                    <SelectItem key={time} value={time}>
+                      {time}
+                    </SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
               <FormDescription>
-                Indícanos tu preferencia horaria y haremos lo posible por ajustarnos.
+                Horario de atención: 09:00 - 19:00.
               </FormDescription>
               <FormMessage />
             </FormItem>
@@ -255,3 +295,4 @@ export function ContactForm() {
     </Form>
   );
 }
+
