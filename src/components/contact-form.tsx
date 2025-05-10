@@ -25,13 +25,14 @@ import { format } from "date-fns";
 import { es } from 'date-fns/locale';
 import { useToast } from "@/hooks/use-toast";
 import React from "react";
+import { WHATSAPP_PHONE_NUMBER } from "@/lib/constants";
 
 const formSchema = z.object({
   fullName: z.string().min(2, { message: "El nombre completo debe tener al menos 2 caracteres." }),
   email: z.string().email({ message: "Por favor, introduce un email válido." }),
   phone: z.string().min(9, { message: "El teléfono debe tener al menos 9 dígitos." }).regex(/^\+?[0-9\s-()]*$/, { message: "Número de teléfono inválido."}),
   preferredDate: z.date({ required_error: "Por favor, selecciona una fecha." }),
-  preferredTime: z.string().min(1, { message: "Por favor, indica una hora preferida." }),
+  preferredTime: z.string().trim().min(1, { message: "Por favor, indica una hora preferida." }),
   comments: z.string().optional(),
   privacyPolicy: z.boolean().refine(val => val === true, {
     message: "Debes aceptar la política de privacidad.",
@@ -56,16 +57,38 @@ export function ContactForm() {
 
   async function onSubmit(values: z.infer<typeof formSchema>) {
     setIsSubmitting(true);
-    // Simulate API call
-    await new Promise(resolve => setTimeout(resolve, 1500));
-    console.log(values);
+
     toast({
-      title: "¡Cita solicitada!",
-      description: "Hemos recibido tu solicitud. Nos pondremos en contacto contigo pronto para confirmar.",
-      variant: "default", // 'default' is greenish in some themes, ensure it's neutral or positive
+      title: "Preparando tu mensaje...",
+      description: "¡Serás redirigido a WhatsApp para finalizar tu reserva!",
     });
-    form.reset();
-    setIsSubmitting(false);
+
+    const formattedDate = format(values.preferredDate, "PPP", { locale: es });
+    const dateTimePreference = `${formattedDate} - ${values.preferredTime}`;
+
+    const messageParts = [
+      "¡Hola! Quiero reservar una cita para Balayage.",
+      `Nombre: ${values.fullName}`,
+      `Email: ${values.email}`,
+      `Teléfono: ${values.phone}`,
+      `Fecha/Hora preferida: ${dateTimePreference}`,
+    ];
+
+    if (values.comments && values.comments.trim() !== "") {
+      messageParts.push(`Comentarios: ${values.comments}`);
+    }
+
+    const whatsappMessage = messageParts.join("\n");
+    const encodedMessage = encodeURIComponent(whatsappMessage);
+    const whatsappUrl = `https://wa.me/${WHATSAPP_PHONE_NUMBER}?text=${encodedMessage}`;
+
+    window.open(whatsappUrl, '_blank');
+
+    // Reset form and state after a brief moment
+    setTimeout(() => {
+      form.reset();
+      setIsSubmitting(false);
+    }, 500);
   }
 
   return (
@@ -213,7 +236,7 @@ export function ContactForm() {
           )}
         />
         <Button type="submit" size="lg" className="w-full" disabled={isSubmitting}>
-          {isSubmitting ? "Enviando..." : "Enviar solicitud"}
+          {isSubmitting ? "Redirigiendo..." : "Enviar y contactar por WhatsApp"}
         </Button>
       </form>
     </Form>

@@ -85,3 +85,7 @@ export const SOCIAL_LINKS: SocialLink[] = [
   { href: '#', icon: Facebook, label: 'Facebook' },
   { href: '#', icon: Youtube, label: 'YouTube' },
 ];
+
+// Replace with your actual WhatsApp number (country code + number, no '+' or leading zeros unless part of the number itself)
+// Example for Spain (+34): 34600112233
+export const WHATSAPP_PHONE_NUMBER = '34123456789'; // TODO: Replace with actual WhatsApp business number
