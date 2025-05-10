@@ -1,6 +1,6 @@
 
 import type { LucideIcon } from 'lucide-react';
-import { Leaf, Sparkles, Award, CalendarCheck, Star, Instagram, Facebook, Youtube } from 'lucide-react';
+import { Leaf, Sparkles, Award, CalendarCheck, Star, Instagram, Facebook, Youtube, ClipboardCheck, ThumbsUp, ShieldCheck } from 'lucide-react';
 
 export type NavLink = {
   href: string;
@@ -120,6 +120,26 @@ export const TEAM_MEMBERS_DATA: TeamMember[] = [
     description: 'Creativo en coloración Balayage, innovando looks que realzan la belleza única de cada cliente.',
     avatarSrc: 'https://picsum.photos/seed/nestor/300/300',
     aiHint: 'man designer'
+  },
+];
+
+export type StrandTestBenefitItem = {
+  icon: LucideIcon;
+  text: string;
+};
+
+export const STRAND_TEST_BENEFITS: StrandTestBenefitItem[] = [
+  {
+    icon: ClipboardCheck,
+    text: 'Un diagnóstico preciso de la condición de tu cabello.',
+  },
+  {
+    icon: ThumbsUp,
+    text: 'Resultados óptimos y personalizados en tu tratamiento de decoloración.',
+  },
+  {
+    icon: ShieldCheck,
+    text: 'Tranquilidad y confianza en el proceso.',
   },
 ];
 
