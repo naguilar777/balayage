@@ -1,9 +1,23 @@
 
+"use client";
+
 import Image from 'next/image';
 import Link from 'next/link';
 import { Button } from '@/components/ui/button';
+import React from 'react';
 
 export function HeroSection() {
+  const handleSmoothScroll = (event: React.MouseEvent<HTMLAnchorElement, MouseEvent>, href: string) => {
+    if (href.startsWith('#')) {
+      event.preventDefault();
+      const targetId = href.substring(1);
+      const targetElement = document.getElementById(targetId);
+      if (targetElement) {
+        targetElement.scrollIntoView({ behavior: 'smooth' });
+      }
+    }
+  };
+
   return (
     <section className="relative min-h-[80vh] md:min-h-screen flex items-center justify-center overflow-hidden pt-20 md:pt-0 bg-gradient-to-br from-background to-secondary/30">
       <div className="absolute inset-0">
@@ -27,7 +41,7 @@ export function HeroSection() {
         </p>
         <div className="mt-10">
           <Button size="lg" asChild className="shadow-lg hover:shadow-xl transform hover:scale-105 transition-all duration-300">
-            <Link href="#contact">Reserva ahora</Link>
+            <Link href="#contact" onClick={(e) => handleSmoothScroll(e, "#contact")}>Reserva ahora</Link>
           </Button>
         </div>
       </div>

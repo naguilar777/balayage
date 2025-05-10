@@ -1,10 +1,30 @@
 
+"use client";
+
 import Link from 'next/link';
 import { Logo } from '@/components/ui/logo';
 import { Button } from '@/components/ui/button';
 import { SOCIAL_LINKS, type SocialLink } from '@/lib/constants';
+import React from 'react';
+
 
 export function Footer() {
+  const handleSmoothScroll = (event: React.MouseEvent<HTMLAnchorElement, MouseEvent>, href: string) => {
+    if (href.startsWith('#')) {
+      event.preventDefault();
+      const targetId = href.substring(1);
+      const targetElement = document.getElementById(targetId);
+      if (targetElement) {
+        targetElement.scrollIntoView({ behavior: 'smooth' });
+      }
+    }
+    // For external links or full page navigations, let default behavior apply
+    // If the link is not an anchor link, it might be an external link or a different page.
+    // In such cases, we don't prevent default to allow normal navigation.
+    // However, if it's an internal page link (e.g., /privacy-policy) and not an anchor,
+    // smooth scrolling isn't applicable, but we shouldn't prevent default either.
+  };
+
   return (
     <footer className="bg-secondary/50 text-secondary-foreground">
       <div className="container mx-auto px-4 py-12 md:px-6 md:py-16">
@@ -40,9 +60,9 @@ export function Footer() {
         <div className="mt-8 border-t border-border pt-8 text-center text-sm text-secondary-foreground/70">
           <p>&copy; {new Date().getFullYear()} Balayage Studio. Todos los derechos reservados.</p>
           <p className="mt-1">
-            <Link href="#" className="hover:text-primary">Política de Privacidad</Link>
+            <Link href="/privacy-policy" onClick={(e) => handleSmoothScroll(e, "/privacy-policy")} className="hover:text-primary">Política de Privacidad</Link>
             {' | '}
-            <Link href="#" className="hover:text-primary">Términos de Servicio</Link>
+            <Link href="/terms-of-service" onClick={(e) => handleSmoothScroll(e, "/terms-of-service")} className="hover:text-primary">Términos de Servicio</Link>
           </p>
         </div>
       </div>

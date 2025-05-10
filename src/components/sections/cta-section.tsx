@@ -1,8 +1,21 @@
 
+"use client";
+
 import Link from 'next/link';
 import { Button } from '@/components/ui/button';
+import React from 'react';
 
 export function CtaSection() {
+  const handleSmoothScroll = (event: React.MouseEvent<HTMLAnchorElement, MouseEvent>, href: string) => {
+    if (href.startsWith('#')) {
+      event.preventDefault();
+      const targetId = href.substring(1);
+      const targetElement = document.getElementById(targetId);
+      if (targetElement) {
+        targetElement.scrollIntoView({ behavior: 'smooth' });
+      }
+    }
+  };
   return (
     <section id="cta" className="bg-primary">
       <div className="container mx-auto px-4 py-16 text-center md:px-6 md:py-24">
@@ -19,7 +32,7 @@ export function CtaSection() {
             asChild
             className="bg-background text-primary hover:bg-background/90 shadow-lg hover:shadow-xl transform hover:scale-105 transition-all duration-300"
           >
-            <Link href="#contact">Reserva tu cita ahora</Link>
+            <Link href="#contact" onClick={(e) => handleSmoothScroll(e, "#contact")}>Reserva tu cita ahora</Link>
           </Button>
         </div>
       </div>

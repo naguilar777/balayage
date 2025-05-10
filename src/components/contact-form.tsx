@@ -26,6 +26,7 @@ import { es } from 'date-fns/locale';
 import { useToast } from "@/hooks/use-toast";
 import React from "react";
 import { WHATSAPP_PHONE_NUMBER } from "@/lib/constants";
+import Link from "next/link";
 
 const formSchema = z.object({
   fullName: z.string().min(2, { message: "El nombre completo debe tener al menos 2 caracteres." }),
@@ -54,6 +55,18 @@ export function ContactForm() {
       privacyPolicy: false,
     },
   });
+
+  const handleSmoothScroll = (event: React.MouseEvent<HTMLAnchorElement, MouseEvent>, href: string) => {
+    if (href.startsWith('#')) {
+      event.preventDefault();
+      const targetId = href.substring(1);
+      const targetElement = document.getElementById(targetId);
+      if (targetElement) {
+        targetElement.scrollIntoView({ behavior: 'smooth' });
+      }
+    }
+  };
+
 
   async function onSubmit(values: z.infer<typeof formSchema>) {
     setIsSubmitting(true);
@@ -228,7 +241,7 @@ export function ContactForm() {
                   Acepto la política de privacidad
                 </FormLabel>
                 <FormDescription>
-                  Confirmo que he leído y acepto los <a href="/privacy-policy" target="_blank" className="underline hover:text-primary">términos y condiciones</a>.
+                  Confirmo que he leído y acepto los <Link href="/privacy-policy" onClick={(e) => handleSmoothScroll(e, "/privacy-policy")} target="_blank" className="underline hover:text-primary">términos y condiciones</Link>.
                 </FormDescription>
                  <FormMessage />
               </div>
