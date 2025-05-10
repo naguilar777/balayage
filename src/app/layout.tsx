@@ -17,8 +17,8 @@ const robotoMono = Roboto_Mono({
 });
 
 export const metadata: Metadata = {
-  title: 'Balayage Studio - Expert Hair Colorists',
-  description: 'Discover your best look with our personalized balayage. Advanced techniques, natural results, exclusively for you.',
+  title: 'Balayage Studio - Expert Hair Colorists by KYNSTUDIO',
+  description: 'Discover your best look with our personalized balayage. Advanced techniques, natural results, exclusively for you. Powered by KYNSTUDIO.',
 };
 
 export default function RootLayout({

@@ -40,7 +40,7 @@ export function Footer() {
             <address className="mt-4 space-y-2 text-sm not-italic text-secondary-foreground/80">
               <p>Calle Falsa 123, Ciudad Ejemplo, CP 08000</p>
               <p>Email: <a href="mailto:info@balayagestudio.com" className="hover:text-primary">info@balayagestudio.com</a></p>
-              <p>Teléfono: <a href="tel:+34900000000" className="hover:text-primary">(+34) 900 000 000</a></p>
+              <p>Teléfono: <a href="tel:+504000000000" className="hover:text-primary">(+504) 900 000 000</a></p>
             </address>
           </div>
           <div>
