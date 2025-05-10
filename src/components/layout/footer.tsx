@@ -38,9 +38,8 @@ export function Footer() {
           <div>
             <h3 className="text-lg font-semibold">Contacto</h3>
             <address className="mt-4 space-y-2 text-sm not-italic text-secondary-foreground/80">
-              <p>Calle Falsa 123, Ciudad Ejemplo, CP 08000</p>
               <p>Email: <a href="mailto:info@balayagestudio.com" className="hover:text-primary">info@balayagestudio.com</a></p>
-              <p>Teléfono: <a href="tel:+504000000000" className="hover:text-primary">(+504) 900 000 000</a></p>
+              <p>WhatsApp: <a href="https://wa.me/50498137344" target="_blank" rel="noopener noreferrer" className="hover:text-primary">(+504) 9813 7344</a></p>
             </address>
           </div>
           <div>
