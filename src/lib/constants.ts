@@ -10,6 +10,7 @@ export type NavLink = {
 export const NAV_LINKS: NavLink[] = [
   { href: '#testimonials', label: 'Testimonios' },
   { href: '#gallery', label: 'Galería' },
+  { href: '#team', label: 'Equipo' }, // Added team link
   { href: '#contact', label: 'Contacto' },
 ];
 
@@ -81,11 +82,48 @@ export type SocialLink = {
 };
 
 export const SOCIAL_LINKS: SocialLink[] = [
-  { href: '#', icon: Instagram, label: 'Instagram' },
-  { href: '#', icon: Facebook, label: 'Facebook' },
-  { href: '#', icon: Youtube, label: 'YouTube' },
+  { href: 'https://www.instagram.com/kynstudio_hn', icon: Instagram, label: 'Instagram' },
+  { href: 'https://www.facebook.com/kynstudiohn', icon: Facebook, label: 'Facebook' },
+  { href: 'https://www.tiktok.com/@fernandabermudez03', icon: Youtube, label: 'TikTok' }, // Assuming Youtube icon for TikTok as TikTok not in lucide
 ];
 
+export type TeamMember = {
+  id: string;
+  name: string;
+  role: string;
+  description: string;
+  avatarSrc: string;
+  aiHint: string;
+};
+
+export const TEAM_MEMBERS_DATA: TeamMember[] = [
+  {
+    id: '1',
+    name: 'Keyrol Fernanda Bermudez',
+    role: 'Estilista Master',
+    description: 'Especialista en técnicas avanzadas de color y corte, reconocida por transformar estilos de manera personalizada.',
+    avatarSrc: 'https://picsum.photos/seed/keyrol/300/300',
+    aiHint: 'woman professional'
+  },
+  {
+    id: '2',
+    name: 'Yesenia Elizabeth Navarro',
+    role: 'Estilista Senior',
+    description: 'Experta en tendencias y colorimetría, con atención al detalle y un trato excepcional al cliente.',
+    avatarSrc: 'https://picsum.photos/seed/yesenia/300/300',
+    aiHint: 'woman stylist'
+  },
+  {
+    id: '3',
+    name: 'Nestor Josue Aguilar',
+    role: 'Diseñador de Balayage',
+    description: 'Creativo en coloración Balayage, innovando looks que realzan la belleza única de cada cliente.',
+    avatarSrc: 'https://picsum.photos/seed/nestor/300/300',
+    aiHint: 'man designer'
+  },
+];
+
+
 // Replace with your actual WhatsApp number (country code + number, no '+' or leading zeros unless part of the number itself)
-// Example for Spain (+34): 34600112233
-export const WHATSAPP_PHONE_NUMBER = '34123456789'; // TODO: Replace with actual WhatsApp business number
+// Example for Spain (+504): 89137344
+export const WHATSAPP_PHONE_NUMBER = '50489137344'; // TODO: Replace with actual WhatsApp business number
