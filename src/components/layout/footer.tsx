@@ -30,8 +30,8 @@ export function Footer() {
       <div className="container mx-auto px-4 py-12 md:px-6 md:py-16">
         <div className="grid gap-8 md:grid-cols-3">
           <div>
-            <Logo isFooter={true} />
-            <p className="mt-4 text-sm text-secondary-foreground/80">
+            <Logo isFooter={true} className="mb-2"/> {/* Added margin for spacing */}
+            <p className="mt-2 text-sm text-secondary-foreground/80"> {/* Adjusted margin-top */}
               Transformando tu cabello, realzando tu belleza.
             </p>
           </div>
@@ -58,7 +58,7 @@ export function Footer() {
           </div>
         </div>
         <div className="mt-8 border-t border-border pt-8 text-center text-sm text-secondary-foreground/70">
-          <p>&copy; {new Date().getFullYear()} Balayage Studio. Todos los derechos reservados.</p>
+          <p>&copy; {new Date().getFullYear()} Balayage Studio by KYNSTUDIO. Todos los derechos reservados.</p>
           <p className="mt-1">
             <Link href="/privacy-policy" onClick={(e) => handleSmoothScroll(e, "/privacy-policy")} className="hover:text-primary">Política de Privacidad</Link>
             {' | '}
@@ -69,3 +69,4 @@ export function Footer() {
     </footer>
   );
 }
+

@@ -43,7 +43,7 @@ export function Header() {
       isScrolled ? "bg-background/80 backdrop-blur-md shadow-md" : "bg-transparent"
     )}>
       <div className="container mx-auto flex h-20 items-center justify-between px-4 md:px-6">
-        <Logo />
+        <Logo className="py-2" /> {/* Added padding for better vertical alignment */}
         <nav className="hidden md:flex items-center space-x-6">
           {NAV_LINKS.map((link: NavLink) => (
             <Link
@@ -71,7 +71,7 @@ export function Header() {
               <SheetContent side="right" className="w-[280px] bg-background p-6">
                 <div className="flex flex-col space-y-6">
                   <div className="flex justify-between items-center">
-                    <Logo />
+                    <Logo className="py-2"/> {/* Added padding for better vertical alignment */}
                     <SheetClose asChild>
                        <Button variant="ghost" size="icon" onClick={() => setIsMobileMenuOpen(false)}>
                         <X className="h-6 w-6" />
@@ -112,3 +112,4 @@ export function Header() {
     </header>
   );
 }
+
