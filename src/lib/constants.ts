@@ -12,8 +12,8 @@ export type NavLink = {
 export const NAV_LINKS: NavLink[] = [
   { href: '#testimonials', label: 'Testimonios' },
   { href: '#gallery', label: 'Galería' },
-  { href: '#team', label: 'Equipo' }, // Added team link
-  { href: '#contact', label: 'Contacto' },
+  { href: '#team', label: 'Equipo' },
+  // { href: '#contact', label: 'Contacto' }, // Removed "Contacto" link
 ];
 
 export type Benefit = {
