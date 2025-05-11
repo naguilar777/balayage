@@ -13,7 +13,6 @@ export const NAV_LINKS: NavLink[] = [
   { href: '#testimonials', label: 'Testimonios' },
   { href: '#gallery', label: 'Galería' },
   { href: '#team', label: 'Equipo' },
-  // { href: '#contact', label: 'Contacto' }, // Removed "Contacto" link
 ];
 
 export type Benefit = {
@@ -45,22 +44,41 @@ export const BENEFITS_DATA: Benefit[] = [
   },
 ];
 
-export type GalleryImage = {
-  id: string;
+export type GalleryImageDetail = {
   src: string;
   alt: string;
-  description: string;
   aiHint: string;
 };
 
-export const GALLERY_IMAGES: GalleryImage[] = [
-  { id: '1', src: 'https://picsum.photos/seed/balayage1/600/800', alt: 'Balayage rubio en cabello largo', description: 'Balayage rubio ceniza en cabello largo y ondulado.', aiHint: 'balayage blonde' },
-  { id: '2', src: 'https://picsum.photos/seed/balayage2/600/800', alt: 'Balayage caramelo en cabello medio', description: 'Tonos caramelo cálidos para un look natural.', aiHint: 'caramel balayage' },
-  { id: '3', src: 'https://picsum.photos/seed/balayage3/600/800', alt: 'Balayage cobrizo vibrante', description: 'Reflejos cobrizos intensos sobre base oscura.', aiHint: 'copper balayage' },
-  { id: '4', src: 'https://picsum.photos/seed/balayage4/600/800', alt: 'Balayage platino moderno', description: 'Un estilo audaz con balayage platino.', aiHint: 'platinum balayage' },
-  { id: '5', src: 'https://picsum.photos/seed/balayage5/600/800', alt: 'Transformación balayage antes y después', description: 'Impactante transformación de color.', aiHint: 'balayage transformation' },
-  { id: '6', src: 'https://picsum.photos/seed/balayage6/600/800', alt: 'Balayage sutil en cabello castaño', description: 'Luces sutiles para iluminar el cabello castaño.', aiHint: 'brunette balayage' },
+export type GalleryTransformation = {
+  id: string;
+  before: GalleryImageDetail;
+  after: GalleryImageDetail;
+  description: string; // General description for the transformation
+};
+
+
+export const GALLERY_IMAGES: GalleryTransformation[] = [
+  {
+    id: 'transform1',
+    before: { src: 'https://picsum.photos/seed/balayage1before/600/800', alt: 'Antes del balayage - Cabello oscuro y largo', aiHint: 'dark hair' },
+    after: { src: 'https://picsum.photos/seed/balayage1after/600/800', alt: 'Después del balayage - Rubio ceniza espectacular', aiHint: 'blonde balayage' },
+    description: 'Transformación a un balayage rubio ceniza que aporta luminosidad y un estilo moderno.'
+  },
+  {
+    id: 'transform2',
+    before: { src: 'https://picsum.photos/seed/balayage2before/600/800', alt: 'Antes del balayage - Cabello castaño medio', aiHint: 'brown hair' },
+    after: { src: 'https://picsum.photos/seed/balayage2after/600/800', alt: 'Después del balayage - Tonos caramelo cálidos', aiHint: 'caramel balayage' },
+    description: 'De castaño medio a unos preciosos tonos caramelo que iluminan el rostro.'
+  },
+  {
+    id: 'transform3',
+    before: { src: 'https://picsum.photos/seed/balayage3before/600/800', alt: 'Antes del balayage - Base oscura', aiHint: 'dark base' },
+    after: { src: 'https://picsum.photos/seed/balayage3after/600/800', alt: 'Después del balayage - Reflejos cobrizos vibrantes', aiHint: 'copper highlights' },
+    description: 'Intensos reflejos cobrizos que añaden dimensión y vitalidad a una base oscura.'
+  },
 ];
+
 
 export type Testimonial = {
   id: string;
