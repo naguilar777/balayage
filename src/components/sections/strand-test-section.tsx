@@ -6,7 +6,7 @@ import Link from 'next/link';
 import React from 'react';
 import { Button } from '@/components/ui/button';
 import { STRAND_TEST_BENEFITS, type StrandTestBenefitItem } from '@/lib/constants';
-import { Gift, Clock, Shield, ClipboardList } from 'lucide-react'; // Icons for whyChooseBenefits list
+import { Gift, Clock, Shield, ClipboardList, Check, Star, ShieldCheck } from 'lucide-react'; 
 
 export function StrandTestSection() {
   const handleSmoothScroll = (event: React.MouseEvent<HTMLAnchorElement, MouseEvent>, href: string) => {
@@ -40,17 +40,17 @@ export function StrandTestSection() {
         </div>
 
         <div className="grid md:grid-cols-2 gap-8 md:gap-12 items-start">
-          <div className="space-y-8 text-center md:text-left">
+          <div className="space-y-8 text-center">
             <div>
-              <p className="text-foreground/80 mb-6 leading-relaxed max-w-xl mx-auto md:mx-0">
+              <p className="text-foreground/80 mb-6 leading-relaxed max-w-xl mx-auto">
                 Imagina descubrir tu mejor look de la mano de verdaderos especialistas en color:
                 Antes de cualquier proceso de decoloración, te invitamos a nuestra exclusiva Prueba de Mechón. Un diagnóstico personalizado donde evaluamos la salud, resistencia y reacción de tu cabello, asegurando resultados impecables y a la medida de tus expectativas.
               </p>
             </div>
             
-            <div className="text-center md:text-left">
+            <div className="text-center">
               <h3 className="text-xl font-semibold text-foreground mb-4">¿Por qué elegir nuestra Prueba de Mechón?</h3>
-              <ul className="space-y-3 text-foreground/80 inline-block text-left max-w-md mx-auto md:mx-0"> {/* Centered list container for mobile, left-aligned items */}
+              <ul className="space-y-3 text-foreground/80 inline-block text-left max-w-md mx-auto">
                 {whyChooseBenefits.map((item, index) => (
                   <li key={index} className="flex items-start">
                     <item.icon className="h-6 w-6 text-primary mr-3 mt-1 flex-shrink-0" />
@@ -60,23 +60,39 @@ export function StrandTestSection() {
               </ul>
             </div>
 
-            <div className="text-center md:text-left">
+            <div className="text-center">
               <h3 className="text-xl font-semibold text-foreground mb-3 mt-6">¿En qué consiste la experiencia?</h3>
-              <p className="text-foreground/80 leading-relaxed max-w-xl mx-auto md:mx-0">
+              <p className="text-foreground/80 leading-relaxed max-w-xl mx-auto">
                 Seleccionamos delicadamente un mechón de tu cabello, aplicamos la técnica profesional de decoloración y evaluamos juntos el resultado. Te acompañamos en cada paso, resolviendo tus dudas y construyendo la base para un cambio espectacular.
               </p>
             </div>
           </div>
 
-          <div className="relative aspect-[4/3] md:aspect-square rounded-lg overflow-hidden shadow-xl mt-8 md:mt-0">
-            <Image
-              src="https://picsum.photos/seed/strand-test-process/800/600"
-              alt="Proceso de prueba de mechón en un salón de belleza"
-              data-ai-hint="hair strand test salon"
-              fill
-              className="object-cover"
-              sizes="(max-width: 768px) 100vw, 50vw"
-            />
+          {/* Image column - now a flex container for multiple images */}
+          <div className="flex flex-col gap-8 mt-8 md:mt-0">
+            {/* First Image */}
+            <div className="relative aspect-[4/3] md:aspect-square rounded-lg overflow-hidden shadow-xl">
+              <Image
+                src="https://picsum.photos/seed/strand-test-process/800/600"
+                alt="Proceso de prueba de mechón en un salón de belleza"
+                data-ai-hint="hair strand test salon"
+                fill
+                className="object-cover"
+                sizes="(max-width: 768px) 100vw, 50vw"
+              />
+            </div>
+
+            {/* Second Image */}
+            <div className="relative aspect-[4/3] md:aspect-square rounded-lg overflow-hidden shadow-xl">
+              <Image
+                src="https://picsum.photos/seed/strand-test-results/800/600"
+                alt="Resultado detallado de una prueba de mechón"
+                data-ai-hint="hair test close-up"
+                fill
+                className="object-cover"
+                sizes="(max-width: 768px) 100vw, 50vw"
+              />
+            </div>
           </div>
         </div>
 
