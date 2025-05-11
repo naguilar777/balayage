@@ -1,6 +1,6 @@
 
 import type { LucideIcon } from 'lucide-react';
-import { Leaf, Sparkles, Award, CalendarCheck, Star, Instagram, Facebook, ClipboardCheck, ThumbsUp, ShieldCheck } from 'lucide-react';
+import { Leaf, Sparkles, Award, CalendarCheck, Star, Instagram, Facebook, Check, ShieldCheck } from 'lucide-react';
 import { TiktokIcon } from '@/components/icons/tiktok-icon';
 import type React from 'react';
 
@@ -13,6 +13,7 @@ export const NAV_LINKS: NavLink[] = [
   { href: '#testimonials', label: 'Testimonios' },
   { href: '#gallery', label: 'Galería' },
   { href: '#team', label: 'Equipo' },
+  { href: '#strand-test', label: 'Prueba de Mechón' },
 ];
 
 export type Benefit = {
@@ -150,16 +151,16 @@ export type StrandTestBenefitItem = {
 
 export const STRAND_TEST_BENEFITS: StrandTestBenefitItem[] = [
   {
-    icon: ClipboardCheck,
-    text: 'Un diagnóstico preciso de la condición de tu cabello.',
+    icon: Check, 
+    text: 'Atención totalmente personalizada.',
   },
   {
-    icon: ThumbsUp,
-    text: 'Resultados óptimos y personalizados en tu tratamiento de decoloración.',
+    icon: Star, 
+    text: 'Transparencia y honestidad en el diagnóstico.',
   },
   {
-    icon: ShieldCheck,
-    text: 'Tranquilidad y confianza en el proceso.',
+    icon: ShieldCheck, 
+    text: 'Seguridad, confianza y respaldo profesional.',
   },
 ];
 
@@ -167,4 +168,3 @@ export const STRAND_TEST_BENEFITS: StrandTestBenefitItem[] = [
 // Replace with your actual WhatsApp number (country code + number, no '+' or leading zeros unless part of the number itself)
 // Example for Spain (+504): 89137344
 export const WHATSAPP_PHONE_NUMBER = '50489137344'; // TODO: Replace with actual WhatsApp business number
-
