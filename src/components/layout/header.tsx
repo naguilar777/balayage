@@ -1,9 +1,10 @@
+
 "use client";
 
 import Link from 'next/link';
 import { Menu, X } from 'lucide-react';
 import { Button } from '@/components/ui/button';
-import { Sheet, SheetContent, SheetTrigger, SheetClose } from '@/components/ui/sheet';
+import { Sheet, SheetContent, SheetTrigger, SheetClose, SheetTitle, SheetDescription } from '@/components/ui/sheet';
 import { Logo } from '@/components/ui/logo';
 import { NAV_LINKS, type NavLink } from '@/lib/constants';
 import { cn, smoothScrollToId } from '@/lib/utils';
@@ -68,6 +69,8 @@ export function Header() {
                 </Button>
               </SheetTrigger>
               <SheetContent side="right" className="w-[280px] bg-background p-6">
+                <SheetTitle className="sr-only">Menú de navegación móvil</SheetTitle>
+                <SheetDescription className="sr-only">Contiene los enlaces principales del sitio y un botón para reservar cita.</SheetDescription>
                 <div className="flex flex-col space-y-6">
                   <div className="flex justify-between items-center">
                     <Logo className="py-2"/> {/* Added padding for better vertical alignment */}
@@ -106,3 +109,4 @@ export function Header() {
     </header>
   );
 }
+
