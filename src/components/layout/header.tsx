@@ -104,7 +104,7 @@ export function Header() {
         </div>
       </div>
       {/* Fixed "Reserva tu cita" button for mobile, shown at bottom */}
-      <div className="md:hidden fixed bottom-4 left-1/2 transform -translate-x-1/2 w-[calc(100%-2rem)] max-w-md z-40">
+      <div className="md:hidden fixed bottom-0 left-1/2 transform -translate-x-1/2 w-[calc(100%-2rem)] max-w-md z-40 py-4"> {/* Changed bottom-4 to bottom-0 and added py-4 for spacing */}
          <Button asChild size="lg" className="w-full shadow-xl hover:shadow-2xl transition-shadow">
             <Link href="#contact" onClick={(e) => handleSmoothScroll(e, "#contact")}>Reserva tu cita</Link>
           </Button>
@@ -112,4 +112,3 @@ export function Header() {
     </header>
   );
 }
-
