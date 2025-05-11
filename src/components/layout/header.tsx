@@ -1,4 +1,3 @@
-
 "use client";
 
 import Link from 'next/link';
@@ -7,7 +6,7 @@ import { Button } from '@/components/ui/button';
 import { Sheet, SheetContent, SheetTrigger, SheetClose } from '@/components/ui/sheet';
 import { Logo } from '@/components/ui/logo';
 import { NAV_LINKS, type NavLink } from '@/lib/constants';
-import { cn } from '@/lib/utils';
+import { cn, smoothScrollToId } from '@/lib/utils';
 import React from 'react';
 
 export function Header() {
@@ -22,20 +21,20 @@ export function Header() {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
-  const handleSmoothScroll = (event: React.MouseEvent<HTMLAnchorElement, MouseEvent>, href: string) => {
-    if (href.startsWith('#')) {
-      event.preventDefault();
-      const targetId = href.substring(1);
-      const targetElement = document.getElementById(targetId);
-      if (targetElement) {
-        targetElement.scrollIntoView({ behavior: 'smooth' });
-      }
-    }
-    // For mobile, ensure menu closes
-    if (isMobileMenuOpen) {
+  const handleSmoothScrollWithMenuClose = (event: React.MouseEvent<HTMLAnchorElement, MouseEvent>, href: string) => {
+    smoothScrollToId(event, href); // Use the utility for scrolling
+
+    // For mobile menu links, ensure menu closes after navigation
+    if (href.startsWith('#') && isMobileMenuOpen) {
       setIsMobileMenuOpen(false);
     }
   };
+  
+  // Simplified handler for links not in the mobile menu (like desktop header links)
+  const handleDesktopSmoothScroll = (event: React.MouseEvent<HTMLAnchorElement, MouseEvent>, href: string) => {
+    smoothScrollToId(event, href);
+  };
+
 
   return (
     <header className={cn(
@@ -49,7 +48,7 @@ export function Header() {
             <Link
               key={link.label}
               href={link.href}
-              onClick={(e) => handleSmoothScroll(e, link.href)}
+              onClick={(e) => handleDesktopSmoothScroll(e, link.href)}
               className="text-sm font-medium text-foreground/80 hover:text-primary transition-colors"
             >
               {link.label}
@@ -58,7 +57,7 @@ export function Header() {
         </nav>
         <div className="flex items-center space-x-3">
            <Button asChild className="hidden md:inline-flex shadow-md hover:shadow-lg transition-shadow">
-            <Link href="#contact" onClick={(e) => handleSmoothScroll(e, "#contact")}>Reserva tu cita</Link>
+            <Link href="#contact" onClick={(e) => handleDesktopSmoothScroll(e, "#contact")}>Reserva tu cita</Link>
           </Button>
           <div className="md:hidden">
             <Sheet open={isMobileMenuOpen} onOpenChange={setIsMobileMenuOpen}>
@@ -85,7 +84,7 @@ export function Header() {
                         <Link
                           href={link.href}
                           className="text-lg font-medium text-foreground hover:text-primary transition-colors py-2"
-                           onClick={(e) => handleSmoothScroll(e, link.href)}
+                           onClick={(e) => handleSmoothScrollWithMenuClose(e, link.href)}
                         >
                           {link.label}
                         </Link>
@@ -94,7 +93,7 @@ export function Header() {
                   </nav>
                   <SheetClose asChild>
                     <Button asChild size="lg" className="w-full">
-                      <Link href="#contact" onClick={(e) => handleSmoothScroll(e, "#contact")}>Reserva tu cita</Link>
+                      <Link href="#contact" onClick={(e) => handleSmoothScrollWithMenuClose(e, "#contact")}>Reserva tu cita</Link>
                     </Button>
                   </SheetClose>
                 </div>
@@ -103,12 +102,7 @@ export function Header() {
           </div>
         </div>
       </div>
-      {/* Fixed "Reserva tu cita" button for mobile, shown at bottom */}
-      <div className="md:hidden fixed bottom-0 left-1/2 transform -translate-x-1/2 w-[calc(100%-2rem)] max-w-md z-40 py-4"> {/* Changed bottom-4 to bottom-0 and added py-4 for spacing */}
-         <Button asChild size="lg" className="w-full shadow-xl hover:shadow-2xl transition-shadow">
-            <Link href="#contact" onClick={(e) => handleSmoothScroll(e, "#contact")}>Reserva tu cita</Link>
-          </Button>
-      </div>
+      {/* Fixed "Reserva tu cita" button for mobile has been moved to src/app/page.tsx */}
     </header>
   );
 }
