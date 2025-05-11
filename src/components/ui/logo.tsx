@@ -35,7 +35,7 @@ export function Logo({ className, isFooter = false }: LogoProps) {
       <div>
         {/* Semantic H1 for "Balayage" as requested */}
         <h1 className={cn(mainTitleBaseClasses, mainTitleSizeClass)}>
-          Balayage
+          Balayage Studio
         </h1>
         {/* Semantic strong for "by KYNSTUDIO" as requested, styled to be bold */}
         <strong className={cn(subTitleBaseClasses, subTitleSizeClass, subTitleMarginClass)}>

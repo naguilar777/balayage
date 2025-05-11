@@ -40,17 +40,17 @@ export function StrandTestSection() {
         </div>
 
         <div className="grid md:grid-cols-2 gap-8 md:gap-12 items-start">
-          <div className="space-y-8">
+          <div className="space-y-8 text-center md:text-left">
             <div>
-              <p className="text-foreground/80 mb-6 leading-relaxed">
+              <p className="text-foreground/80 mb-6 leading-relaxed max-w-xl mx-auto md:mx-0">
                 Imagina descubrir tu mejor look de la mano de verdaderos especialistas en color:
                 Antes de cualquier proceso de decoloración, te invitamos a nuestra exclusiva Prueba de Mechón. Un diagnóstico personalizado donde evaluamos la salud, resistencia y reacción de tu cabello, asegurando resultados impecables y a la medida de tus expectativas.
               </p>
             </div>
             
-            <div>
+            <div className="text-center md:text-left">
               <h3 className="text-xl font-semibold text-foreground mb-4">¿Por qué elegir nuestra Prueba de Mechón?</h3>
-              <ul className="space-y-3 text-foreground/80">
+              <ul className="space-y-3 text-foreground/80 inline-block text-left max-w-md mx-auto md:mx-0"> {/* Centered list container for mobile, left-aligned items */}
                 {whyChooseBenefits.map((item, index) => (
                   <li key={index} className="flex items-start">
                     <item.icon className="h-6 w-6 text-primary mr-3 mt-1 flex-shrink-0" />
@@ -60,9 +60,9 @@ export function StrandTestSection() {
               </ul>
             </div>
 
-            <div>
+            <div className="text-center md:text-left">
               <h3 className="text-xl font-semibold text-foreground mb-3 mt-6">¿En qué consiste la experiencia?</h3>
-              <p className="text-foreground/80 leading-relaxed">
+              <p className="text-foreground/80 leading-relaxed max-w-xl mx-auto md:mx-0">
                 Seleccionamos delicadamente un mechón de tu cabello, aplicamos la técnica profesional de decoloración y evaluamos juntos el resultado. Te acompañamos en cada paso, resolviendo tus dudas y construyendo la base para un cambio espectacular.
               </p>
             </div>
