@@ -1,4 +1,3 @@
-
 "use client";
 
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -40,30 +39,42 @@ const formSchema = z.object({
   email: z.string().email({ message: "Por favor, introduce un email válido." }),
   phone: z.string().min(9, { message: "El teléfono debe tener al menos 9 dígitos." }).regex(/^\+?[0-9\s-()]*$/, { message: "Número de teléfono inválido."}),
   preferredDate: z.date({ required_error: "Por favor, selecciona una fecha." }),
-  preferredTime: z.string({ required_error: "Por favor, selecciona una hora." }).min(1, { message: "Por favor, selecciona una hora." }),
+  preferredTime: z.string({
+    required_error: "Por favor, selecciona una hora."
+  })
+  .min(1, { message: "Por favor, selecciona una hora." })
+  .refine(time => {
+    const [hour, minute] = time.split(':').map(Number);
+    // Use a dummy date to compare times easily
+    const compareDate = new Date();
+    const selectedTime = new Date(compareDate.getFullYear(), compareDate.getMonth(), compareDate.getDate(), hour, minute);
+    const minTime = new Date(compareDate.getFullYear(), compareDate.getMonth(), compareDate.getDate(), 9, 0);
+    const maxTime = new Date(compareDate.getFullYear(), compareDate.getMonth(), compareDate.getDate(), 17, 0); // 5:00 PM
+
+    // Check if the selected time is within the 9:00 to 17:00 range (inclusive)
+     return selectedTime >= minTime && selectedTime <= maxTime;
+
+  }, { message: "Selecciona una hora entre 9:00 am y 5:00 pm." }),
   comments: z.string().optional(),
   privacyPolicy: z.boolean().refine(val => val === true, {
     message: "Debes aceptar la política de privacidad.",
   }),
 });
 
+// Revised generateTimeSlots function
 const generateTimeSlots = () => {
   const slots = [];
-  const startTime = 9; // 9 AM
-  const endTime = 19; // 7 PM
+  const startTotalMinutes = 9 * 60; // 9:00 AM in minutes
+  const endTotalMinutes = 17 * 60; // 5:00 PM in minutes
   const interval = 30; // minutes
 
-  for (let hour = startTime; hour <= endTime; hour++) {
-    for (let minute = 0; minute < 60; minute += interval) {
-      if (hour === endTime && minute > 0) break; // Do not exceed end time
-      
-      const formattedHour = hour.toString().padStart(2, '0');
-      const formattedMinute = minute.toString().padStart(2, '0');
-      slots.push(`${formattedHour}:${formattedMinute}`);
-    }
+  for (let totalMinutes = startTotalMinutes; totalMinutes <= endTotalMinutes; totalMinutes += interval) {
+    const hour = Math.floor(totalMinutes / 60);
+    const minute = totalMinutes % 60;
+    const formattedHour = hour.toString().padStart(2, '0');
+    const formattedMinute = minute.toString().padStart(2, '0');
+    slots.push(`${formattedHour}:${formattedMinute}`);
   }
-  // Ensure the last slot is exactly endTime if interval doesn't align perfectly
-  // For 9:00 to 19:00 with 30 min interval, 19:00 is already included.
   return slots;
 };
 
@@ -100,6 +111,9 @@ export function ContactForm() {
   async function onSubmit(values: z.infer<typeof formSchema>) {
     setIsSubmitting(true);
 
+    // ** Validation check is now handled by Zod resolver before this function is called **
+    // If onSubmit is reached, the time is valid according to the schema.
+
     toast({
       title: "Preparando tu mensaje...",
       description: "¡Serás redirigido a WhatsApp para finalizar tu reserva!",
@@ -120,17 +134,19 @@ export function ContactForm() {
       messageParts.push(`Comentarios: ${values.comments}`);
     }
 
-    const whatsappMessage = messageParts.join("\n");
+    const whatsappMessage = messageParts.join("");
     const encodedMessage = encodeURIComponent(whatsappMessage);
     const whatsappUrl = `https://wa.me/${WHATSAPP_PHONE_NUMBER}?text=${encodedMessage}`;
 
-    window.open(whatsappUrl, '_blank');
-
-    // Reset form and state after a brief moment
+    // Use a small delay before opening the URL to allow the toast to be seen
     setTimeout(() => {
-      form.reset();
-      setIsSubmitting(false);
-    }, 500);
+      window.open(whatsappUrl, '_blank');
+       // Reset form and state after opening the URL
+       form.reset();
+       setIsSubmitting(false);
+    }, 1000); // Delay of 1 second
+
+
   }
 
   return (
@@ -172,7 +188,7 @@ export function ContactForm() {
               <FormItem>
                 <FormLabel>Teléfono</FormLabel>
                 <FormControl>
-                  <Input type="tel" placeholder="(+34) 600 000 000" {...field} />
+                  <Input type="tel" placeholder="50400000000" {...field} />
                 </FormControl>
                 <FormMessage />
               </FormItem>
@@ -219,7 +235,7 @@ export function ContactForm() {
             )}
           />
         </div>
-        
+
         <FormField
           control={form.control}
           name="preferredTime"
@@ -228,11 +244,12 @@ export function ContactForm() {
               <FormLabel>Hora preferida</FormLabel>
               <Select onValueChange={field.onChange} defaultValue={field.value}>
                 <FormControl>
-                  <SelectTrigger className={cn(!field.value && "text-muted-foreground")}>
-                    <SelectValue placeholder="Selecciona una hora" />
-                  </SelectTrigger>
+                  {/* Updated placeholder text */}
+                  <SelectValue placeholder="Selecciona la hora (9:00 am – 5:00 pm)" />
                 </FormControl>
+                {/* SelectContent must be rendered for the options to appear when the trigger is clicked */}
                 <SelectContent>
+                  {/* timeSlots array is now generated with the correct range */}
                   {timeSlots.map((time) => (
                     <SelectItem key={time} value={time}>
                       {time}
@@ -240,8 +257,9 @@ export function ContactForm() {
                   ))}
                 </SelectContent>
               </Select>
+              {/* Updated FormDescription to reflect the correct range */}
               <FormDescription>
-                Horario de atención: 09:00 - 19:00.
+                Horario de atención para reservas: 09:00 - 17:00.
               </FormDescription>
               <FormMessage />
             </FormItem>
@@ -295,4 +313,3 @@ export function ContactForm() {
     </Form>
   );
 }
-

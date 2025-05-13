@@ -75,9 +75,34 @@ export const GALLERY_IMAGES: GalleryTransformation[] = [
   {
     id: 'transform3',
     before: { src: 'https://lh3.googleusercontent.com/d/1znfcqJwOw6mO2ILK1GO6jM2ngqaH4RLS=w600-h800', alt: 'Antes del balayage - Base oscura', aiHint: 'dark base' },
-    after: { src: 'https://lh3.googleusercontent.com/d/1EJi3YRShpcKOyS_we6II54qD6bHgEMWp=w600-h800', alt: 'Después del balayage - Reflejos cobrizos vibrantes', aiHint: 'copper highlights' },
-    description: 'Intensos reflejos cobrizos que añaden dimensión y vitalidad a una base oscura.'
+    after: { src: 'https://lh3.googleusercontent.com/d/1EJi3YRShpcKOyS_we6II54qD6bHgEMWp=w600-h800', alt: 'Después del balayage - Reflejos caramelo vibrantes', aiHint: 'caramel highlights' },
+    description: 'Intensos reflejos caramelo que añaden dimensión y vitalidad a una base oscura.'
   },
+  {
+    id: 'transform4',
+    before: { src: 'https://lh3.googleusercontent.com/d/11IXCeEgJL6yOkBOyWM8gm1tUTJQPnsjD=w600-h800', alt: 'Antes del balayage - Base oscura', aiHint: 'dark base' },
+    after: { src: 'https://lh3.googleusercontent.com/d/1SLeXA-Ag6olamMQWmxldqPxfoNFJZTIf=w600-h800', alt: 'Después del balayage - Reflejos caramelo vibrantes', aiHint: 'caramel highlights' },
+    description: 'Intensos reflejos caramelo que añaden dimensión y vitalidad a una base oscura.'
+  },
+  {
+    id: 'transform5',
+    before: { src: 'https://lh3.googleusercontent.com/d/14saFs4OzNJf-vttcr9-Vk3RyQtnna9ec=w600-h800', alt: 'Antes del balayage - Base oscura', aiHint: 'dark base' },
+    after: { src: 'https://lh3.googleusercontent.com/d/1qN0TLU6dAxmnGzXhxpK7myeuwYY6F3F7=w600-h800', alt: 'Después del balayage - Reflejos caramelo vibrantes', aiHint: 'caramel highlights' },
+    description: 'Intensos reflejos caramelo que añaden dimensión y vitalidad a una base oscura.'
+  },
+  {
+    id: 'transform6',
+    before: { src: 'https://lh3.googleusercontent.com/d/1io7vaxLUT5qdYCPWYelm34_5nkcw7lRK=w600-h800', alt: 'Antes del balayage - Base oscura', aiHint: 'dark base' },
+    after: { src: 'https://lh3.googleusercontent.com/d/1BAMEmoPGZ0XL7Bl58DxoY1_Au4ss6f39=w600-h800', alt: 'Después del balayage - Reflejos caramelo vibrantes', aiHint: 'caramel highlights' },
+    description: 'Intensos reflejos caramelo que añaden dimensión y vitalidad a una base oscura.'
+  },
+  {
+    id: 'transform7',
+    before: { src: 'https://lh3.googleusercontent.com/d/15gaUZ-Yly2PCC9SNeXOnEd5Z_VM-rSxR=w600-h800', alt: 'Antes del balayage - Base oscura', aiHint: 'dark base' },
+    after: { src: 'https://lh3.googleusercontent.com/d/1pT3T_ZIxy1wyEvvh-WDEDN8q29e5AWiP=w600-h800', alt: 'Después del balayage - Reflejos caramelo vibrantes', aiHint: 'caramel highlights' },
+    description: 'Intensos reflejos caramelo que añaden dimensión y vitalidad a una base oscura.'
+  },
+  
 ];
 
 
@@ -91,9 +116,9 @@ export type Testimonial = {
 };
 
 export const TESTIMONIALS_DATA: Testimonial[] = [
-  { id: '1', avatarSrc: 'https://picsum.photos/seed/avatar1/100/100', name: 'Ana Pérez', stars: 5, text: '¡Absolutamente enamorada de mi nuevo look! El equipo es súper profesional y amable. ¡Recomendadísimo!', aiHint: 'woman smiling' },
-  { id: '2', avatarSrc: 'https://picsum.photos/seed/avatar2/100/100', name: 'Laura Gómez', stars: 5, text: 'La mejor experiencia de balayage que he tenido. Entendieron perfectamente lo que quería y el resultado superó mis expectativas.', aiHint: 'happy customer' },
-  { id: '3', avatarSrc: 'https://picsum.photos/seed/avatar3/100/100', name: 'Sofía Rodríguez', stars: 4, text: 'Muy contenta con el color y la atención. El salón es precioso y te hacen sentir muy cómoda. Volveré seguro.', aiHint: 'satisfied client' },
+  { id: '1', avatarSrc: 'https://lh3.googleusercontent.com/d/1ORgwBRG6O24PbJce_YfB_0D84sqebcZj', name: 'Bessy', stars: 5, text: '¡Absolutamente enamorada de mi nuevo look! El equipo es súper profesional y amable. ¡Recomendadísimo!', aiHint: 'woman smiling' },
+  { id: '2', avatarSrc: 'https://lh3.googleusercontent.com/d/15xwvD8fK9a1j11vQXks_mMSLibl_wfbM', name: 'Andrea', stars: 5, text: 'La mejor experiencia de balayage que he tenido. Entendieron perfectamente lo que quería y el resultado superó mis expectativas.', aiHint: 'happy customer' },
+  { id: '3', avatarSrc: 'https://lh3.googleusercontent.com/d/1N9tVGP09WFUV_GaevzOD0O1cZLqxHZPv', name: 'Julissa', stars: 5, text: 'Muy contenta con el color y la atención. El salón es precioso y te hacen sentir muy cómoda. Volveré seguro.', aiHint: 'satisfied client' },
 ];
 
 export type SocialLink = {

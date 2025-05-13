@@ -1,4 +1,3 @@
-
 "use client";
 
 import Image from 'next/image';
@@ -16,101 +15,91 @@ type SelectedModalImage = {
 };
 
 export function GallerySection() {
+  // Combine before and after images into a single array for the gallery display
+  const galleryImages = GALLERY_IMAGES.flatMap(item => [
+    { ...item.before, description: `Antes: ${item.description || 'Imagen sin descripción'}` },
+    { ...item.after, description: `Después: ${item.description || 'Imagen sin descripción'}` }
+  ]);
   const [selectedImage, setSelectedImage] = useState<SelectedModalImage | null>(null);
 
   return (
-    <section id="gallery" className="bg-secondary/30">
+    // The background color `bg-secondary/30` is kept as is, assuming it fits the "blush suave" or white palette.
+    <section id="gallery" className="bg-secondary/30 py-16 md:py-24">
       <div className="container mx-auto px-4 md:px-6">
         <div className="text-center mb-12 md:mb-16">
+          {/* Updated Section Title */}
           <h2 className="text-3xl font-bold tracking-tight text-foreground sm:text-4xl">
-            Transformaciones: Antes y Después
+            Nuestro Arte en KYNSTUDIO
           </h2>
-          <p className="mt-4 text-lg text-foreground/70 max-w-2xl mx-auto">
-            Observa el poder de un balayage bien hecho y cómo podemos realzar tu belleza.
+          {/* Added Subtitle */}
+          <p className="mt-4 text-xl text-foreground max-w-2xl mx-auto">
+            Descubre la esencia y el proceso detrás de cada Balayage
+          </p>
+          {/* Added Introduction */}
+          <p className="mt-4 text-lg text-foreground/70 max-w-3xl mx-auto">
+            En KYNSTUDIO, cada Balayage es una obra personalizada. Nuestro proceso comienza con una consulta detallada, donde entendemos tus expectativas y evaluamos la salud de tu cabello. Creamos resultados únicos—mezclando técnica, creatividad y productos premium—para realzar tu belleza natural y lograr un acabado moderno y sofisticado.
           </p>
         </div>
-        
-        <Dialog open={!!selectedImage} onOpenChange={(isOpen) => !isOpen && setSelectedImage(null)}>
-          <div className="grid grid-cols-1 gap-8 md:gap-12 lg:grid-cols-2">
-            {GALLERY_IMAGES.map((transformation: GalleryTransformation) => (
-              <div 
-                key={transformation.id} 
-                className="bg-card shadow-lg hover:shadow-xl transition-shadow duration-300 rounded-lg p-3 md:p-4"
-              >
-                <div className="flex flex-col md:flex-row gap-3 md:gap-4 items-stretch">
-                  {/* Before Image Column */}
-                  <div className="w-full md:w-1/2">
-                    <div className="relative aspect-[3/4] rounded-md overflow-hidden group shadow-md">
-                      <Image
-                        src={transformation.before.src}
-                        alt={transformation.before.alt}
-                        data-ai-hint={transformation.before.aiHint}
-                        fill
-                        className="object-cover transition-transform duration-300 group-hover:scale-105"
-                        sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw"
-                      />
-                      <div className="absolute top-2 left-2 bg-black/70 text-white text-xs font-semibold px-2.5 py-1.5 rounded-md shadow">
-                        Antes
-                      </div>
-                    </div>
-                  </div>
 
-                  {/* After Image Column (Clickable) */}
-                  <div className="w-full md:w-1/2">
-                    <DialogTrigger
-                      asChild
-                      onClick={() => setSelectedImage({
-                        src: transformation.after.src,
-                        alt: transformation.after.alt,
-                        description: transformation.description,
-                        aiHint: transformation.after.aiHint,
-                      })}
-                    >
-                      <div className="relative aspect-[3/4] rounded-md overflow-hidden cursor-pointer group shadow-md">
-                        <Image
-                          src={transformation.after.src}
-                          alt={transformation.after.alt}
-                          data-ai-hint={transformation.after.aiHint}
-                          fill
-                          className="object-cover transition-transform duration-300 group-hover:scale-105"
-                          sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw"
-                        />
-                        <div className="absolute top-2 left-2 bg-black/70 text-white text-xs font-semibold px-2.5 py-1.5 rounded-md shadow">
-                          Después
-                        </div>
-                        <div className="absolute inset-0 bg-gradient-to-t from-black/75 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col justify-center items-center text-center p-4">
-                          <Expand className="h-10 w-10 text-primary-foreground opacity-80 group-hover:opacity-100 mb-2 filter drop-shadow-sm" />
-                          <p className="text-primary-foreground text-base font-semibold drop-shadow-sm">Ver Detalle</p>
-                        </div>
-                      </div>
-                    </DialogTrigger>
+        <Dialog open={!!selectedImage} onOpenChange={(isOpen) => !isOpen && setSelectedImage(null)}>
+          {/* Adjusted grid columns based on screen size */}
+          <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4 md:gap-6">
+            {galleryImages.map((image, index) => (
+              <DialogTrigger asChild key={index}>
+                <div
+                  key={`gallery-image-${index}`}
+                  // Added rounded corners, subtle shadow, and hover effect (scale and subtle ring/outline)
+                  className="relative aspect-[3/4] rounded-xl overflow-hidden cursor-pointer group shadow-sm hover:shadow-xl transition-all duration-300 transform hover:scale-105 hover:ring-2 hover:ring-primary/50"
+                  onClick={() => setSelectedImage({
+                    src: image.src,
+                    alt: image.alt,
+                    description: image.description, // Using the description from the image object
+                    aiHint: image.aiHint,
+                  })}
+                >
+                  <Image
+                    src={image.src}
+                    alt={image.alt}
+                    data-ai-hint={image.aiHint}
+                    fill
+                    // Added w-full and h-full here
+                    className="object-cover w-full h-full transition-transform duration-300 group-hover:scale-110"
+                    sizes="(max-width: 640px) 50vw, (max-width: 768px) 33vw, (max-width: 1024px) 25vw, 25vw"
+                  />
+                  {/* Overlay for hover effect - slightly adjusted opacity and content */}
+                  <div className="absolute inset-0 bg-black/40 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                     <Expand className="h-8 w-8 text-white opacity-90 group-hover:opacity-100" />
                   </div>
+                  {/* Removed text overlay on hover to keep it cleaner */}
                 </div>
-                <p className="mt-4 text-sm text-foreground/80 text-center px-1">
-                  {transformation.description}
-                </p>
-              </div>
+              </DialogTrigger>
             ))}
           </div>
 
           {selectedImage && (
-            <DialogContent className="sm:max-w-[calc(100vw-2rem)] md:max-w-[600px] lg:max-w-[700px] p-0 bg-card rounded-lg overflow-hidden">
+            // Modal Content - Kept largely the same, adjusted padding and added description below image
+            <DialogContent className="sm:max-w-[calc(100vw-2rem)] md:max-w-[80vw] lg:max-w-[900px] p-4 md:p-6 bg-card rounded-lg overflow-hidden">
               <DialogHeader className="sr-only">
                 <DialogTitle>{selectedImage.alt}</DialogTitle>
+                {/* DialogDescription is typically for accessibility, the visual description is below */}
                 <DialogDescription>{selectedImage.description}</DialogDescription>
               </DialogHeader>
-              <div className="w-full aspect-[3/4] relative">
+              {/* Image container in modal */}
+              <div className="w-full aspect-[3/4] relative mb-4">
                 <Image
                   src={selectedImage.src}
                   alt={selectedImage.alt}
                   data-ai-hint={selectedImage.aiHint}
                   fill
-                  className="object-contain"
-                  sizes=" (max-width: 768px) 90vw, 600px"
+                   // Added w-full and h-full here
+                  className="object-contain w-full h-full rounded-md"
+                  sizes=" (max-width: 768px) 90vw, 80vw"
                 />
               </div>
-              <div className="p-6 text-center">
-                <p className="text-base font-semibold text-foreground mb-1">{selectedImage.alt}</p>
+              {/* Description below image in modal */}
+              <div className="text-center">
+                 {/* Optional: Display alt text as a title */}
+                 {/* <p className="text-lg font-semibold text-foreground mb-1">{selectedImage.alt}</p> */}
                 <p className="text-sm text-muted-foreground">{selectedImage.description}</p>
               </div>
             </DialogContent>
