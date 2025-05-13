@@ -73,7 +73,7 @@ export function StrandTestSection() {
             {/* First Image */}
             <div className="relative aspect-[4/3] md:aspect-square rounded-lg overflow-hidden shadow-xl">
               <Image
-                src="https://picsum.photos/seed/strand-test-process/800/600"
+                src="https://lh3.googleusercontent.com/d/1Iau4bba8U5XDeP7vu_cvecBZr8s-lbyC=w800-h600"
                 alt="Proceso de prueba de mechón en un salón de belleza"
                 data-ai-hint="hair strand test salon"
                 fill
@@ -85,7 +85,7 @@ export function StrandTestSection() {
             {/* Second Image */}
             <div className="relative aspect-[4/3] md:aspect-square rounded-lg overflow-hidden shadow-xl">
               <Image
-                src="https://picsum.photos/seed/strand-test-results/800/600"
+                src="https://lh3.googleusercontent.com/d/1t-YFk2OP1pFYxapKqqmQGWW2MzdkarMW=w800-h600"
                 alt="Resultado detallado de una prueba de mechón"
                 data-ai-hint="hair test close-up"
                 fill
