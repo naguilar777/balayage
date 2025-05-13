@@ -19,13 +19,8 @@ import { Checkbox } from "@/components/ui/checkbox";
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
 import { CalendarIcon } from "lucide-react";
 import { Calendar } from "@/components/ui/calendar";
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
+// Removed: import TimePickerInput from "react-time-picker-input";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"; // Added Select components
 import { cn } from "@/lib/utils";
 import { format } from "date-fns";
 import { es } from 'date-fns/locale';
@@ -33,6 +28,22 @@ import { useToast } from "@/hooks/use-toast";
 import React from "react";
 import { WHATSAPP_PHONE_NUMBER } from "@/lib/constants";
 import Link from "next/link";
+
+// Function to generate time options
+const generateTimeOptions = () => {
+  const times = [];
+  for (let hour = 9; hour <= 17; hour++) {
+    for (let minute = 0; minute < 60; minute += 30) {
+      if (hour === 17 && minute > 0) break; // Stop after 17:00
+      const formattedHour = hour.toString().padStart(2, '0');
+      const formattedMinute = minute.toString().padStart(2, '0');
+      times.push(`${formattedHour}:${formattedMinute}`);
+    }
+  }
+  return times;
+};
+
+const timeOptions = generateTimeOptions();
 
 const formSchema = z.object({
   fullName: z.string().min(2, { message: "El nombre completo debe tener al menos 2 caracteres." }),
@@ -43,42 +54,21 @@ const formSchema = z.object({
     required_error: "Por favor, selecciona una hora."
   })
   .min(1, { message: "Por favor, selecciona una hora." })
+  // Keep Zod validation for extra safety, though the select options will enforce the range
   .refine(time => {
+    if (!time) return false;
     const [hour, minute] = time.split(':').map(Number);
-    // Use a dummy date to compare times easily
     const compareDate = new Date();
     const selectedTime = new Date(compareDate.getFullYear(), compareDate.getMonth(), compareDate.getDate(), hour, minute);
     const minTime = new Date(compareDate.getFullYear(), compareDate.getMonth(), compareDate.getDate(), 9, 0);
-    const maxTime = new Date(compareDate.getFullYear(), compareDate.getMonth(), compareDate.getDate(), 17, 0); // 5:00 PM
-
-    // Check if the selected time is within the 9:00 to 17:00 range (inclusive)
-     return selectedTime >= minTime && selectedTime <= maxTime;
-
-  }, { message: "Selecciona una hora entre 9:00 am y 5:00 pm." }),
+    const maxTime = new Date(compareDate.getFullYear(), compareDate.getMonth(), compareDate.getDate(), 17, 0);
+    return selectedTime >= minTime && selectedTime <= maxTime;
+  }, { message: "Selecciona una hora válida." }), // Updated message
   comments: z.string().optional(),
   privacyPolicy: z.boolean().refine(val => val === true, {
     message: "Debes aceptar la política de privacidad.",
   }),
 });
-
-// Revised generateTimeSlots function
-const generateTimeSlots = () => {
-  const slots = [];
-  const startTotalMinutes = 9 * 60; // 9:00 AM in minutes
-  const endTotalMinutes = 17 * 60; // 5:00 PM in minutes
-  const interval = 30; // minutes
-
-  for (let totalMinutes = startTotalMinutes; totalMinutes <= endTotalMinutes; totalMinutes += interval) {
-    const hour = Math.floor(totalMinutes / 60);
-    const minute = totalMinutes % 60;
-    const formattedHour = hour.toString().padStart(2, '0');
-    const formattedMinute = minute.toString().padStart(2, '0');
-    slots.push(`${formattedHour}:${formattedMinute}`);
-  }
-  return slots;
-};
-
-const timeSlots = generateTimeSlots();
 
 export function ContactForm() {
   const { toast } = useToast();
@@ -107,12 +97,8 @@ export function ContactForm() {
     }
   };
 
-
   async function onSubmit(values: z.infer<typeof formSchema>) {
     setIsSubmitting(true);
-
-    // ** Validation check is now handled by Zod resolver before this function is called **
-    // If onSubmit is reached, the time is valid according to the schema.
 
     toast({
       title: "Preparando tu mensaje...",
@@ -123,7 +109,7 @@ export function ContactForm() {
     const dateTimePreference = `${formattedDate} - ${values.preferredTime}`;
 
     const messageParts = [
-      "¡Hola! Quiero reservar una cita para Balayage.",
+      "¡Hola! *Quiero reservar una cita para Balayage.*",
       `Nombre: ${values.fullName}`,
       `Email: ${values.email}`,
       `Teléfono: ${values.phone}`,
@@ -134,19 +120,15 @@ export function ContactForm() {
       messageParts.push(`Comentarios: ${values.comments}`);
     }
 
-    const whatsappMessage = messageParts.join("");
+    const whatsappMessage = messageParts.join("\n");
     const encodedMessage = encodeURIComponent(whatsappMessage);
     const whatsappUrl = `https://wa.me/${WHATSAPP_PHONE_NUMBER}?text=${encodedMessage}`;
 
-    // Use a small delay before opening the URL to allow the toast to be seen
     setTimeout(() => {
       window.open(whatsappUrl, '_blank');
-       // Reset form and state after opening the URL
        form.reset();
        setIsSubmitting(false);
-    }, 1000); // Delay of 1 second
-
-
+    }, 1000);
   }
 
   return (
@@ -188,7 +170,7 @@ export function ContactForm() {
               <FormItem>
                 <FormLabel>Teléfono</FormLabel>
                 <FormControl>
-                  <Input type="tel" placeholder="50400000000" {...field} />
+                  <Input type="tel" placeholder="504 00000000" {...field} />
                 </FormControl>
                 <FormMessage />
               </FormItem>
@@ -244,20 +226,16 @@ export function ContactForm() {
               <FormLabel>Hora preferida</FormLabel>
               <Select onValueChange={field.onChange} defaultValue={field.value}>
                 <FormControl>
-                  {/* Updated placeholder text */}
-                  <SelectValue placeholder="Selecciona la hora (9:00 am – 5:00 pm)" />
+                  <SelectTrigger className="w-full time-select-trigger"> {/* Added custom class */}
+                    <SelectValue placeholder="Selecciona la hora (9:00 – 17:00)" />
+                  </SelectTrigger>
                 </FormControl>
-                {/* SelectContent must be rendered for the options to appear when the trigger is clicked */}
-                <SelectContent>
-                  {/* timeSlots array is now generated with the correct range */}
-                  {timeSlots.map((time) => (
-                    <SelectItem key={time} value={time}>
-                      {time}
-                    </SelectItem>
+                <SelectContent className="time-select-content"> {/* Added custom class */}
+                  {timeOptions.map(time => (
+                    <SelectItem key={time} value={time}>{time}</SelectItem>
                   ))}
                 </SelectContent>
               </Select>
-              {/* Updated FormDescription to reflect the correct range */}
               <FormDescription>
                 Horario de atención para reservas: 09:00 - 17:00.
               </FormDescription>
